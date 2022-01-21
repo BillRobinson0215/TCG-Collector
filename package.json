@@ -1,6 +1,6 @@
 {
-  "homepage": "http://<git-name>.github.io/<repo-name>",
-  "name": "react-auth-template",
+  "homepage": "http://billrobinson0215.github.io/tcg-collector",
+  "name": "tcg-collector",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
