@@ -3,3 +3,31 @@
 body {
   background-color: black;
 }
+
+html {
+  color: white;
+}
+
+.add-to-collection {
+  margin-left: 2rem;
+}
+
+.card-image {
+  border-radius: .3rem;
+}
+
+.cp-signout-div {
+  position: absolute;
+  right: 3vh;
+  display: inline;
+}
+
+.form-label {
+  color: white;
+}
+
+.input-form {
+  background-color: rgb(82, 82, 82);
+  color: white;
+  width: 20vw;
+}

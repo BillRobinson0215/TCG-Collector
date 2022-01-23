@@ -6,7 +6,9 @@ import { Link, NavLink } from 'react-router-dom'
 const authenticatedOptions = (
   <Fragment>
     <NavLink to='/collections' className='nav-link'>Collections</NavLink>
-    <div >
+    <NavLink to='/sets' className='nav-link'>Sets</NavLink>
+    <NavLink to='/cards' className='nav-link'>Cards</NavLink>
+    <div className='cp-signout-div'>
       <NavLink to='/change-password' className='nav-link'>Change Password</NavLink>
       <NavLink to='/sign-out' className='nav-link'>Sign Out</NavLink>
     </div>
