@@ -12,6 +12,7 @@ import SignOut from './components/auth/SignOut'
 import ChangePassword from './components/auth/ChangePassword'
 import Sets from './components/Pages/Sets'
 import Cards from './components/Pages/Cards'
+import Collection from './components/Pages/Collection'
 
 class App extends Component {
   constructor (props) {
@@ -97,6 +98,11 @@ class App extends Component {
             user={user}
             path='/cards'
             render={() => <Cards msgAlert={this.msgAlert} user={user} />}
+          />
+          <AuthenticatedRoute
+            user={user}
+            path='/collections'
+            render={() => <Collection msgAlert={this.msgAlert} user={user} />}
           />
         </main>
       </Fragment>

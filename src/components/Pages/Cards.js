@@ -108,7 +108,9 @@ class Cards extends Component {
     const listStyle = {
       listStyle: 'none',
       color: 'white',
-      display: 'inline-block'
+      display: 'inline-block',
+      width: '36vh',
+      height: '45vh'
     }
 
     const cardDetails = {
@@ -116,16 +118,15 @@ class Cards extends Component {
     }
 
     const cardImage = {
-      borderRadius: '.8rem',
+      borderRadius: '1rem',
       height: '45vh',
       width: '35vh',
-      marginTop: '3vh'
+      marginTop: '3vh',
+      marginRight: '1vh'
     }
 
     const buttonStyle = {
-      borderRadius: '.5rem',
-      display: 'block',
-      marginLeft: '8vh'
+      borderRadius: '.5rem'
     }
 
     const cards = this.state.cards
@@ -135,7 +136,9 @@ class Cards extends Component {
         return nameA < nameB ? -1 : 1
       })
       .map((card) => (
-        <li style={listStyle} key={card.id}> <img style={cardImage} src={card.imageUrl}></img><h6 style={cardDetails}>{card.name}<br/>{card.setName}</h6><button style={buttonStyle} id={card}>Add to collection</button>
+        <li className='card-list' style={listStyle} key={card.id}>
+          <img className='card-info' style={cardImage} src={card.imageUrl}></img><h6 style={cardDetails}>{card.name}<br/>{card.setName}</h6>
+          <button style={buttonStyle} id={card}>Add to collection</button>
         </li>
       ))
 

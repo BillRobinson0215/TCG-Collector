@@ -1,19 +1,27 @@
 @import '~bootstrap/scss/bootstrap';
 
 body {
-  background-color: black;
+  background-color: rgb(8, 1, 43);
 }
 
 html {
   color: white;
 }
 
-.add-to-collection {
-  margin-left: 2rem;
+// .add-to-collection {
+//   margin-left: 2rem;
+// }
+
+.card-info {
+  background-position: center;
+  background-repeat: none;
+  background-image: url("./photo/NoImage.png");
+  margin-bottom: 1vh;
 }
 
-.card-image {
-  border-radius: .3rem;
+.card-list {
+  display: inline-block;
+  text-align: center;
 }
 
 .cp-signout-div {
@@ -27,7 +35,7 @@ html {
 }
 
 .input-form {
-  background-color: rgb(82, 82, 82);
+  background-color: rgb(52, 52, 52);
   color: white;
   width: 20vw;
 }
