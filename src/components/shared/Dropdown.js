@@ -13,10 +13,10 @@ function Dropdown ({ title, items, multiSelect = false }) {
     }
   }
 
-  function updateState (event) {
-    this.state.selectedCollectionName = event.target.value
-    selectedCollectionId.setState()
-  }
+  // function updateState (event) {
+  //   this.state.selectedCollectionName = event.target.value
+  //   selectedCollectionId.setState()
+  // }
 
   return (
     <div className='dropdown-wrapper'>
@@ -42,8 +42,7 @@ function Dropdown ({ title, items, multiSelect = false }) {
                 id={item._id}
                 value={item.name}
                 type='button'
-                onClick={() => handleOnClick(item)}
-                onClickCapture={() => updateState()}>
+                onClick={() => handleOnClick(item)}>
                 <span>{item.name}</span>
               </button>
             </li>
