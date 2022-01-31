@@ -45,7 +45,10 @@ html {
   text-align: center;
   text-size-adjust: 3rem;
   border-radius: 1.5rem;
-  margin-left: 1.3rem;
+  margin-left: 1.7rem;
+  border-color: rgb(235, 180, 0);
+  border-width: .2rem;
+  border-style: solid;
 }
 
 .dropdown-header_title {
@@ -65,15 +68,16 @@ html {
 }
 
 .dropdown-list {
+  position: absolute;
   width: 20vh;
   list-style-type: none;
-  float: none;
+  margin-left: .7rem;
 }
 
 .dropdown-values {
   width: 100%;
-  color: green;
-  background-color: black;
+  color: rgb(235, 180, 0);
+  background-color: rgb(52, 52, 52);
 }
 
 .dropdown-wrapper {
@@ -95,6 +99,6 @@ html {
 }
 
 .selected-collection {
-  display: flex;
-  justify-content: center;
+  text-align: center;
+  color: white;
 }

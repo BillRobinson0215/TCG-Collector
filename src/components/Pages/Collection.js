@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import { Button, Col } from 'react-bootstrap'
+
 import apiUrl from '../../apiConfig'
 import axios from 'axios'
 
@@ -57,11 +58,13 @@ class Collection extends Component {
   }
 
   updateCollections = () => {
-    this.getCollection(this.props.user.token)
-      .then((collections) => {
+    this.getCollection(this.props.user.token).then(
+      (collections) => {
+        console.log(collections)
         this.setState({ collections: collections.data.collection })
         console.log(this.state.collections)
-      })
+      }
+    )
   }
 
   createCollection = function (event) {
@@ -78,7 +81,7 @@ class Collection extends Component {
 
   getCollection = (token) => {
     return axios({
-      url: apiUrl + '/collection/show',
+      url: apiUrl + '/collection/find-collection/',
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`
@@ -128,10 +131,16 @@ class Collection extends Component {
       })
       .map((collection) => (
         <li className='collection-list' key={collection._id} style={listStyle}>
-          <h5>{collection.name}</h5>
-          <h6 style={listText}>{collection.cards.length} Cards</h6>
-          <button style={buttonStyle}>View</button>
-          <button style={buttonStyleDelete}>Delete</button>
+          <Col>
+            <h5>{collection.name}</h5>
+          </Col>
+          <Col>
+            <h6 style={listText}>{collection.cards.length} Cards</h6>
+          </Col>
+          <Col>
+            <button style={buttonStyle}>View</button>
+            <button style={buttonStyleDelete}>Delete</button>
+          </Col>
         </li>
       ))
 
