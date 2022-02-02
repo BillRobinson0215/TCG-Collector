@@ -101,7 +101,7 @@ class App extends Component {
           />
           <AuthenticatedRoute
             user={user}
-            path='/collections'
+            exact path='/collections'
             render={() => <Collection msgAlert={this.msgAlert} user={user} />}
           />
         </main>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form'
-import { Button, Col } from 'react-bootstrap'
+import { withRouter } from 'react-router-dom'
+import { Button, Col, Row } from 'react-bootstrap'
 
 import apiUrl from '../../apiConfig'
 import axios from 'axios'
@@ -14,18 +15,13 @@ class Collection extends Component {
 
     this.state = {
       collectionName: '',
-      collections: []
+      collections: [],
+      selectedCollection: false,
+      collectionToShow: {},
+      collectionToShowName: '',
+      cardsToShow: []
     }
   }
-  // state = {
-  //   sets: []
-  // }
-
-  // lifecycle methods
-  // componentDidMount () {
-  //   // console.log('mounted')
-  //   this.getCards()
-  // }
 
   handleChange = (event) =>
     this.setState({
@@ -36,17 +32,6 @@ class Collection extends Component {
     // console.log('mounted')
     this.updateCollections()
   }
-
-  // getCollections = () => {
-  // // this.setState(books: axios('url'))
-  //   axios({
-  //     method: 'GET',
-  //     url: apiUrl + '/collection/:id',
-  //     data: {
-  //       name: name, owner: user
-  //     }
-  //   })
-  // }
 
   onCreateCollection = (event) => {
     event.preventDefault()
@@ -60,11 +45,26 @@ class Collection extends Component {
   updateCollections = () => {
     this.getCollection(this.props.user.token).then(
       (collections) => {
-        console.log(collections)
         this.setState({ collections: collections.data.collection })
         console.log(this.state.collections)
       }
     )
+  }
+
+  consoleLog = () => {
+    console.log(this.state.collectionToShow)
+  }
+
+  deleteCollection = (event, token) => {
+    const collectionId = event.target.id
+    return axios({
+      method: 'DELETE',
+      url: apiUrl + '/collection/delete/' + collectionId,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(this.componentDidMount())
   }
 
   createCollection = function (event) {
@@ -77,6 +77,17 @@ class Collection extends Component {
         name: name, owner: user
       }
     })
+  }
+
+  getCollectionToShow =(collection,
+    token) => {
+    return axios({
+      url: apiUrl + '/collection/show/' + collection,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).catch(console.error)
   }
 
   getCollection = (token) => {
@@ -122,6 +133,7 @@ class Collection extends Component {
       justifySelf: 'right',
       alignSelf: 'right'
     }
+
     const { setCollectionName } = this.state.collectionName
     const collections = this.state.collections
       .sort((collectionA, collectionB) => {
@@ -132,42 +144,77 @@ class Collection extends Component {
       .map((collection) => (
         <li className='collection-list' key={collection._id} style={listStyle}>
           <Col>
-            <h5>{collection.name}</h5>
+            <Button variant="dark" onClick={() => this.setState({ selectedCollection: true, collectionToShow: collection, collectionToShowName: collection.name, cardsToShow: collection.cards })}>{collection.name}</Button>
+          </Col>
+          <Col>
           </Col>
           <Col>
             <h6 style={listText}>{collection.cards.length} Cards</h6>
           </Col>
           <Col>
-            <button style={buttonStyle}>View</button>
-            <button style={buttonStyleDelete}>Delete</button>
+            <Button variant="dark" style={buttonStyle} onClick={() => this.setState({ selectedCollection: true, collectionToShow: collection })}>View</Button>
+            <Button variant="danger" onClick={this.deleteCollection} id={collection._id} style={buttonStyleDelete}>Delete</Button>
           </Col>
         </li>
       ))
 
-    console.log(this.props)
-    return (
-      <div>
-        <Form onSubmit={this.onCreateCollection}>
-          <Form.Group controlId='nameSearch'>
-            <Form.Label className='form-label'>Create New Collection</Form.Label>
-            <Form.Control
-              className='input-form'
-              required
-              name='collectionName'
-              value={setCollectionName}
-              type='collectionName'
-              placeholder='Collection Name'
-              onChange={this.handleChange}
-            />
-            <Button variant='primary' type='submit'>Submit</Button>
-          </Form.Group>
-        </Form>
-        {/* <button onClick={getCollection}>Show Collections</button> */}
-        <h4>{this.collectionName}</h4>
-        <ul>{collections}</ul>
-      </div>
-    )
+    const cards = this.state.cardsToShow
+      .sort((cardA, cardB) => {
+        const nameA = cardA.name.toLowerCase()
+        const nameB = cardB.name.toLowerCase()
+        return nameA < nameB ? -1 : 1
+      })
+      .map((card) => (
+        <li className='card-list' style={listStyle} key={card.id}>
+          <img
+            className='card-info'
+            src={card.imageUrl}></img>
+          <h6>
+            {card.name}
+            <br />
+            {card.setName}
+          </h6>
+          <Row className='quantity-row'>
+            <p>#: <input className="input-form" id='card-quantity'></input></p>
+          </Row>
+          <button style={buttonStyle} value={card.id} onClick={this.onAddCard}>Add to collection</button>
+        </li>
+      ))
+
+    if (!this.state.selectedCollection) {
+      return (
+        <div>
+          <Form onSubmit={this.onCreateCollection}>
+            <Form.Group controlId='nameSearch'>
+              <Form.Label className='form-label'>Create New Collection</Form.Label>
+              <Form.Control
+                className='input-form'
+                required
+                name='collectionName'
+                value={setCollectionName}
+                type='collectionName'
+                placeholder='Collection Name'
+                onChange={this.handleChange}
+              />
+              <Button variant='primary' type='submit'>Submit</Button>
+            </Form.Group>
+          </Form>
+          {/* <button onClick={getCollection}>Show Collections</button> */}
+          <h4>{this.collectionName}</h4>
+          <ul>{collections}</ul>
+        </div>
+      )
+    } else {
+      return (
+        <>
+          <Button variant="dark" onClick={() => this.setState({ selectedCollection: false })}>Back to Collections</Button>
+          <Button onClick={this.consoleLog}>Selection?</Button>
+          <p>{this.state.collectionToShowName}</p>
+          <ul>{cards}</ul>
+        </>
+      )
+    }
   }
 }
 
-export default Collection
+export default withRouter(Collection)

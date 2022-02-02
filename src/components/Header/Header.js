@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import { Link, NavLink } from 'react-router-dom'
+import { Dropdown } from 'react-bootstrap'
 
 const authenticatedOptions = (
   <Fragment>
@@ -9,8 +10,13 @@ const authenticatedOptions = (
     <NavLink to='/sets' className='nav-link'>Sets</NavLink>
     <NavLink to='/cards' className='nav-link'>Cards</NavLink>
     <div className='cp-signout-div'>
-      <NavLink to='/change-password' className='nav-link'>Change Password</NavLink>
-      <NavLink to='/sign-out' className='nav-link'>Sign Out</NavLink>
+      <Dropdown variant="dark">
+        <Dropdown.Toggle variant="dark" id="dropdown-basic">Manage Account</Dropdown.Toggle>
+        <Dropdown.Menu variant="dark">
+          <NavLink to='/change-password' className='nav-link'>Change Password</NavLink>
+          <NavLink to='/sign-out' className='nav-link'>Sign Out</NavLink>
+        </Dropdown.Menu>
+      </Dropdown>
     </div>
   </Fragment>
 )
@@ -29,11 +35,11 @@ const alwaysOptions = (
 )
 
 const Header = ({ user }) => (
-  <Navbar bg='primary' variant='dark' expand='md'>
+  <Navbar bg='dark' variant="dark" expand='md'>
     <Navbar.Brand>
       <Link to='/' style={{ color: '#FFF', textDecoration: 'none' }}>tcg-collector</Link>
     </Navbar.Brand>
-    <Navbar.Toggle aria-controls='basic-navbar-nav' />
+    <Navbar.Toggle variant="dark" aria-controls='basic-navbar-nav' />
     <Navbar.Collapse id='basic-navbar-nav'>
       <Nav className='ml-auto'>
         {user && (

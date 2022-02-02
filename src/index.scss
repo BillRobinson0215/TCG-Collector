@@ -20,7 +20,8 @@ html {
 }
 
 .card-list {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
   text-align: center;
 }
 
@@ -30,58 +31,10 @@ html {
   display: inline;
 }
 
-.dropdown-header_action {
-  background-color: grey;
-  color: black;
-  text-align: center;
-  right: 1rem;
-  height: 1.5rem;
-  margin-left: .3rem;
-}
-
-.dropdown-header {
-  background-color: grey;
-  display: inline-flex;
-  text-align: center;
-  text-size-adjust: 3rem;
-  border-radius: 1.5rem;
-  margin-left: 1.7rem;
-  border-color: rgb(235, 180, 0);
-  border-width: .2rem;
-  border-style: solid;
-}
-
-.dropdown-header_title {
-  background-color: grey;
-  color: black;
-  text-align: center;
-  border-radius: 1rem;
-  height: 1.5rem;
-}
-
 .dropDown-menu {
   display: flex;
-  align-content: center;
   justify-content: center;
-  align-items: center;
-  justify-items: center;
-}
-
-.dropdown-list {
-  position: absolute;
-  width: 20vh;
-  list-style-type: none;
-  margin-left: .7rem;
-}
-
-.dropdown-values {
-  width: 100%;
-  color: rgb(235, 180, 0);
-  background-color: rgb(52, 52, 52);
-}
-
-.dropdown-wrapper {
-  width: 25vh;
+  margin-top: 3rem;
 }
 
 .Forms {
@@ -90,6 +43,7 @@ html {
 
 .form-label {
   color: white;
+  width: 19rem;
 }
 
 .input-form {
@@ -98,7 +52,28 @@ html {
   width: 20vw;
 }
 
+.quantity-row {
+  display: flex;
+  justify-content: center;
+  margin-left: -2.25rem;
+  margin-bottom: -.3rem;
+}
+
+.search-disclaimer {
+  width: 1rem;
+  font-size: .9rem;
+}
+
 .selected-collection {
   text-align: center;
   color: white;
+}
+
+#card-quantity {
+  width: 3.5rem;
+}
+
+#setSearch {
+  margin-left: 5rem;
+  margin-top: 1.8rem;
 }

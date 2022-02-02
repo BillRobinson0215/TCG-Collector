@@ -7,8 +7,9 @@ import axios from 'axios'
 // import axios from 'axios'
 import mtg from 'mtgsdk'
 // import mtgUrl from '../../MTGConfig'
-import Dropdown from '../shared/Dropdown'
-// import { cardAdded } from '../AutoDismissAlert/messages.js'
+import DropdownMenu from '../shared/Dropdown2'
+import Row from 'react-bootstrap/Row'
+import { cardAdded, cardAddFailed } from '../AutoDismissAlert/messages.js'
 // import mtgUrl from '../API-Management/MTGconfig'
 
 class Cards extends Component {
@@ -22,36 +23,15 @@ class Cards extends Component {
       criteriaToFind: '',
       selection: [],
       selectedCollectionId: '',
-      selectedCollectionName: '',
+      selectedCollectionName: 'Select a Collection',
       collections: [],
       cards: []
     }
   }
 
-  // state = {
-  //   sets: []
-  // }
-
-  // lifecycle methods
-  // componentDidMount () {
-  //   // console.log('mounted')
-  //   this.getCards()
-  // }
-
   componentDidMount () {
-    // console.log('mounted')
     this.updateCollections()
   }
-
-  // handleOnClick (event) {
-  //   if (!this.state.selection.some(current => current.id === event.id)) {
-  //     this.state.selectedCollectionName([event.name])
-  //     this.state.selectedCollectionId([event._id])
-  //     console.log([event._id])
-  //     // window.seId = selectedCollectionId
-  //     // window.seName = selectedCollectionName
-  //   }
-  // }
 
 handleChange = (event) => {
   this.setState({
@@ -60,8 +40,8 @@ handleChange = (event) => {
 }
 
 handleNewChange = (event) => {
-  this.setState({ selectedCollectionId: event._id })
-  console.log(this.state.selectedCollectionId)
+  this.setState({ selectedCollectionId: [event.target.name] })
+  this.setState({ selectedCollectionName: [event.target.id] })
 }
 
 updateCollections = () => {
@@ -83,7 +63,6 @@ updateCollections = () => {
 cardSearchByName = (event) => {
   event.preventDefault()
   const nameToFind = event.target[0].value
-  console.log(nameToFind)
   mtg.card
     .where({ name: nameToFind })
     .then((cards) => {
@@ -107,26 +86,35 @@ cardSearchBySet = (event) => {
 }
 
 addCard = (event) => {
-  const collectionId = window.seId
+  const collectionId = this.state.selectedCollectionId
   const cardId = event.target.value
-  console.log(window.seId)
   return axios({
     method: 'PATCH',
     url: apiUrl + '/collection/' + collectionId + '/' + cardId
   })
 }
 
-// onAddCard = (event) => {
-//   const msgAlert = this.props
-//   this.addCard()
-//     .then(() =>
-//       msgAlert({
-//         heading: 'Card Added Success',
-//         message: cardAdded,
-//         variant: 'success'
-//       })
-//     )
-// }
+onAddCard = (event) => {
+  event.preventDefault()
+
+  const { msgAlert } = this.props
+
+  this.addCard(event)
+    .then(() =>
+      msgAlert({
+        heading: 'Card Add Success',
+        message: cardAdded,
+        variant: 'success'
+      })
+    )
+    .catch(() => {
+      msgAlert({
+        heading: 'Failed to Add Card: ',
+        message: cardAddFailed,
+        variant: 'danger'
+      })
+    })
+}
 
 render () {
   // console.log('rendering')
@@ -174,7 +162,10 @@ render () {
           <br />
           {card.setName}
         </h6>
-        <button style={buttonStyle} value={card.id} onClick={this.addCard}>Add to collection</button>
+        <Row className='quantity-row'>
+          <p>#: <input className="input-form" id='card-quantity'></input></p>
+        </Row>
+        <button style={buttonStyle} value={card.id} onClick={this.onAddCard}>Add to collection</button>
       </li>
     ))
 
@@ -183,7 +174,7 @@ render () {
       <div className='Forms'>
         <Form className='Forms' onSubmit={this.cardSearchByName}>
           <Form.Group controlId='nameSearch'>
-            <Form.Label className='form-label'>Card Search by Name</Form.Label>
+            <Form.Label className='form-label'><h4>Card Search by Name</h4></Form.Label>
             <Form.Control
               className='input-form'
               required
@@ -196,9 +187,9 @@ render () {
           </Form.Group>
           <Button variant='primary' type='submit'>Submit</Button>
         </Form>
-        <Form className='Forms' onSubmit={this.cardSearchBySet}>
+        <Form className='Forms' id='setSearch' onSubmit={this.cardSearchBySet}>
           <Form.Group controlId='nameSearch'>
-            <Form.Label className='form-label'>Card Search by Color</Form.Label>
+            <Form.Label className='form-label'><h4>Card Search by Color</h4><h12 className="search-disclaimer">*Be as specific as possible in your search only 100 items returned per request</h12></Form.Label>
             <Form.Control
               className='input-form'
               required
@@ -225,7 +216,7 @@ render () {
         </Form>
       </div>
       <div className='dropDown-menu'>
-        <Dropdown title='Select Collection' items= {this.state.collections} handleOnClick={this.handleNewChange} />
+        <DropdownMenu items={this.state.collections} title={this.state.selectedCollectionName} handleNewChange={this.handleNewChange}/>
       </div>
       <ul>{cards}</ul>
     </div>
