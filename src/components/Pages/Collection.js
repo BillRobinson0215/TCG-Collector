@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form'
 import { withRouter } from 'react-router-dom'
-import { Button, Col, Row } from 'react-bootstrap'
+import { Button, Col } from 'react-bootstrap'
 
 import apiUrl from '../../apiConfig'
 import axios from 'axios'
@@ -166,18 +166,23 @@ class Collection extends Component {
       })
       .map((card) => (
         <li className='card-list' style={listStyle} key={card.id}>
-          <img
-            className='card-info'
-            src={card.imageUrl}></img>
-          <h6>
-            {card.name}
-            <br />
-            {card.setName}
-          </h6>
-          <Row className='quantity-row'>
-            <p>#: <input className="input-form" id='card-quantity'></input></p>
-          </Row>
-          <button style={buttonStyle} value={card.id} onClick={this.onAddCard}>Add to collection</button>
+          <Col>
+            <img
+              className='card-info'
+              src={card.imageUrl}></img>
+          </Col>
+          <Col>
+            <h6>
+              {card.name}
+              <br />
+              {card.setName}
+            </h6>
+          </Col>
+          <Col>
+            #: <input className="input-form" id='card-quantity'></input>
+            <Button variant='success'>Update</Button>
+            <Button variant="danger" onClick={this.deleteCollection} id={card._id} style={buttonStyleDelete}>Delete</Button>
+          </Col>
         </li>
       ))
 
