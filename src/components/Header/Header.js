@@ -7,6 +7,7 @@ import { Dropdown } from 'react-bootstrap'
 const authenticatedOptions = (
   <Fragment>
     <NavLink to='/collections' className='nav-link'>Collections</NavLink>
+    <NavLink to='/decks' className='nav-link'>Decks</NavLink>
     <NavLink to='/sets' className='nav-link'>Sets</NavLink>
     <NavLink to='/cards' className='nav-link'>Cards</NavLink>
     <div className='cp-signout-div'>

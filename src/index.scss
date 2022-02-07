@@ -12,6 +12,11 @@ html {
 //   margin-left: 2rem;
 // }
 
+.btn-success {
+  margin-top: -.2rem;
+  margin-left: .3rem;
+}
+
 .card-info {
   background-position: center;
   background-repeat: none;
@@ -50,6 +55,21 @@ html {
   background-color: rgb(52, 52, 52);
   color: white;
   width: 20vw;
+}
+.input-form-quantity {
+  background-color: rgb(52, 52, 52);
+  display: inline-flex;
+  color: white;
+  width: 5vw;
+}
+
+.form-label-quantity {
+  display: inline;
+  margin-right: .3rem;
+}
+
+.quantity-form {
+  display: flex;
 }
 
 .quantity-row {

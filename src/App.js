@@ -13,6 +13,7 @@ import ChangePassword from './components/auth/ChangePassword'
 import Sets from './components/Pages/Sets'
 import Cards from './components/Pages/Cards'
 import Collection from './components/Pages/Collection'
+import Decks from './components/Pages/Decks'
 
 class App extends Component {
   constructor (props) {
@@ -103,6 +104,11 @@ class App extends Component {
             user={user}
             exact path='/collections'
             render={() => <Collection msgAlert={this.msgAlert} user={user} />}
+          />
+          <AuthenticatedRoute
+            user={user}
+            exact path='/decks'
+            render={() => <Decks msgAlert={this.msgAlert} user={user} />}
           />
         </main>
       </Fragment>

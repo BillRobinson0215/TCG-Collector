@@ -8,7 +8,7 @@ import axios from 'axios'
 import mtg from 'mtgsdk'
 // import mtgUrl from '../../MTGConfig'
 import DropdownMenu from '../shared/Dropdown2'
-import Row from 'react-bootstrap/Row'
+// import Row from 'react-bootstrap/Row'
 import { cardAdded, cardAddFailed } from '../AutoDismissAlert/messages.js'
 // import mtgUrl from '../API-Management/MTGconfig'
 
@@ -66,7 +66,6 @@ cardSearchByName = (event) => {
   mtg.card
     .where({ name: nameToFind })
     .then((cards) => {
-      console.log(cards)
       this.setState({ cards: cards })
     })
     .catch(console.error)
@@ -79,7 +78,6 @@ cardSearchBySet = (event) => {
   mtg.card
     .where({ setName: setToFind, colors: colorToFind })
     .then((cards) => {
-      console.log(cards)
       this.setState({ cards: cards })
     })
     .catch(console.error)
@@ -162,9 +160,9 @@ render () {
           <br />
           {card.setName}
         </h6>
-        <Row className='quantity-row'>
+        {/* <Row className='quantity-row'>
           <p>#: <input className="input-form" id='card-quantity'></input></p>
-        </Row>
+        </Row> */}
         <button style={buttonStyle} value={card.id} onClick={this.onAddCard}>Add to collection</button>
       </li>
     ))
@@ -189,7 +187,7 @@ render () {
         </Form>
         <Form className='Forms' id='setSearch' onSubmit={this.cardSearchBySet}>
           <Form.Group controlId='nameSearch'>
-            <Form.Label className='form-label'><h4>Card Search by Color</h4><h12 className="search-disclaimer">*Be as specific as possible in your search only 100 items returned per request</h12></Form.Label>
+            <Form.Label className='form-label'><h4>Card Search by Color</h4><span className="search-disclaimer">*Be as specific as possible in your search only 100 items returned per request</span></Form.Label>
             <Form.Control
               className='input-form'
               required
